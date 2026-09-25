@@ -311,8 +311,12 @@ void Backend::copyAsHtml() {
         rendered.setDefaultFont(m_document->defaultFont());
     rendered.setMarkdown(currentDocumentText());
 
+    QString html = rendered.toHtml();
+    static const QRegularExpression paragraphTag(QStringLiteral("<p(?:\\s+[^>]*)?>"));
+    html.replace(paragraphTag, QStringLiteral("<p style=\"margin: 0 0 1em 0;\">"));
+
     auto *mimeData = new QMimeData;
-    mimeData->setHtml(rendered.toHtml());
+    mimeData->setHtml(html);
     mimeData->setText(rendered.toPlainText());
     QGuiApplication::clipboard()->setMimeData(mimeData);
     setStatus(QStringLiteral("Copied as HTML."));
