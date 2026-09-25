@@ -313,8 +313,7 @@ void Backend::copyAsHtml() {
 
     QString html = rendered.toHtml();
     static const QRegularExpression paragraphTag(QStringLiteral("<p(?:\\s+[^>]*)?>"));
-    html.replace(paragraphTag, QStringLiteral("<div>"));
-    html.replace(QStringLiteral("</p>"), QStringLiteral("</div>"));
+    html.replace(paragraphTag, QStringLiteral("<p style=\"margin: 0 0 1em 0;\">"));
 
     auto *mimeData = new QMimeData;
     mimeData->setHtml(html);
